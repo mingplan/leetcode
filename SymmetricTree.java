@@ -1,6 +1,5 @@
 package leetcode;
 
-import java.util.Stack;
 
 public class SymmetricTree {
 	class TreeNode {
@@ -15,47 +14,21 @@ public class SymmetricTree {
 
 	public boolean isSymmetric(TreeNode root) {
 
-		if (root == null) {
-			return true;
-		} else {
-			Stack<TreeNode> left = new Stack<TreeNode>();
-			Stack<TreeNode> right = new Stack<TreeNode>();
-			if (root.left != null) {
-				left.push(root.left);
-			}
-			if (root.right != null) {
-				right.push(root.right);
-			}
-
-			while ((!left.isEmpty()) && (!right.isEmpty())
-					&& left.peek().val == right.peek().val) {
-				TreeNode tl = left.pop();
-				TreeNode tr = right.pop();
-				if (left.isEmpty())
-					break;
-				if (right.isEmpty())
-					break;
-				if (tl.left != null) {
-					left.push(tl.left);
-				}
-				if (tl.right != null) {
-					left.push(tl.right);
-				}
-				if (tr.left != null) {
-					right.push(tr.left);
-				}
-				if (tr.right != null) {
-					right.push(tr.right);
-				}
-
-			}
-
-			if (left.isEmpty() && right.isEmpty()) {
-				return true;
-			} else {
-				return false;
-			}
-
-		}
+		if(root==null)return true;
+		return dfs(root.left,root.right);
 	}
+	
+	public boolean dfs(TreeNode left,TreeNode right){
+		if(left==null&&right==null){
+			return true;
+		}
+		if(left==null||right==null){
+			return false;
+		}
+		boolean f1 = left.val==right.val;
+		boolean f2 = dfs(left.left,right.right);
+		boolean f3 = dfs(left.right,right.left);
+		return f1&&f2&&f3;
+	}
+	
 }
